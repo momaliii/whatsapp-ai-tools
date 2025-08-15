@@ -24,8 +24,17 @@ let client = new Client({
   authStrategy: new LocalAuth({ clientId: `whatsapp-ai-agent-${activeProfile}` }),
   puppeteer: {
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    executablePath: puppeteerLib && typeof puppeteerLib.executablePath === 'function' ? puppeteerLib.executablePath() : undefined,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process',
+      '--disable-gpu'
+    ],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || (puppeteerLib && typeof puppeteerLib.executablePath === 'function' ? puppeteerLib.executablePath() : undefined),
   },
 });
 
@@ -282,6 +291,16 @@ app.post('/login', (req, res) => {
   return res.redirect('/');
 });
 
+// Health check endpoint (no auth required)
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    whatsapp: connectionState.status
+  });
+});
+
 // Protect all pages if password set
 app.use(requireAuth);
 app.get('/status/whatsapp', (req, res) => {
@@ -314,8 +333,17 @@ app.get('/profiles/switch-now', async (req, res) => {
       authStrategy: new LocalAuth({ clientId: `whatsapp-ai-agent-${activeProfile}` }),
       puppeteer: {
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        executablePath: puppeteerLib && typeof puppeteerLib.executablePath === 'function' ? puppeteerLib.executablePath() : undefined,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--single-process',
+          '--disable-gpu'
+        ],
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || (puppeteerLib && typeof puppeteerLib.executablePath === 'function' ? puppeteerLib.executablePath() : undefined),
       },
     });
     client.on('qr', (qr) => { qrcode.generate(qr, { small: true }); connectionState = { status: 'qr', lastQR: Date.now() }; });
@@ -354,9 +382,10 @@ app.get('/page/:section', (req, res) => {
     res.redirect('/');
   }
 });
-const dashboardPort = process.env.DASHBOARD_PORT || 4000;
-app.listen(dashboardPort, () => {
+const dashboardPort = process.env.PORT || process.env.DASHBOARD_PORT || 4000;
+app.listen(dashboardPort, '0.0.0.0', () => {
   console.log(`Dashboard available at http://localhost:${dashboardPort}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
 // Start EasyOrders API poller (if enabled in settings)
