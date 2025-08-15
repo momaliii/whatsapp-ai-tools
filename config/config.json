@@ -1,0 +1,47 @@
+{
+  "systemPrompt": "You are a helpful WhatsApp assistant. Keep replies brief and friendly.\r\nyour name is ki 1\r\nyou can check Knowledge Baseand answer client",
+  "model": "gpt-4o-mini",
+  "temperature": 0.7,
+  "maxTokens": 300,
+  "botEnabled": true,
+  "easyOrders": {
+    "enabled": true,
+    "webhookSecret": "THFFTjdUMFRrRw==",
+    "phoneField": "customer",
+    "countryCodePrefix": "+2",
+    "sendOn": "created",
+    "template": "أهلًا يا {{name}} 😍💖\r\nتم تأكيد الأوردر: {{order_id}}  ✅✨\r\nعدد: {{items_count}}\r\nالمنتج: {{items}}\r\nالسعر: {{total}} ج.م\r\nالعنوان: {{address}}   \r\nممكن تأكدي العنوان ولو فيه رقم تليفون تاني يسهّل الوصول لحضرتك ممكن تبعتيه علشان نضمن إن المنتج يوصلك بسرعة ❤📍\r\n\r\n🚚 شركة الشحن والمندوب هيكلموكي في خلال 24-48 ساعة علي الفون او الواتساب عشان تستلمي طلبك 🌟\r\n\r\n Roma Pharmacy 💖✨\r\n{{date}}, {{time}}",
+    "apiKey": "ee06d3aa-ee75-45b1-9c01-750d9f8b8331",
+    "listUrl": "",
+    "pollEnabled": false,
+    "pollEverySec": 15,
+    "pollSinceIso": ""
+  },
+  "notifications": {
+    "enabled": false,
+    "adminWhatsApp": "",
+    "slackWebhookUrl": ""
+  },
+  "autoReplies": [],
+  "profiles": [
+    "roma",
+    "profile"
+  ],
+  "activeProfile": "profile",
+  "bulkTemplates": [
+    {
+      "name": "w",
+      "template": "wweew",
+      "caption": ""
+    },
+    {
+      "name": "roma",
+      "template": "أهلًا يا {{VAR1}} 😍💖\nتم تأكيد الأوردر: {{VAR2}}✅✨\nعدد: {{VAR3}}\nالمنتج: {{VAR4}} \nالسعر:{{VAR5}}ج.م\nالعنوان: {{var6}}\nممكن تأكدي العنوان ولو فيه رقم تليفون تاني يسهّل الوصول لحضرتك ممكن تبعتيه علشان نضمن إن المنتج يوصلك بسرعة ❤📍\n\n🚚 شركة الشحن والمندوب هيكلموكي في خلال 24-48 ساعة علي الفون او الواتساب عشان تستلمي طلبك 🌟\n\n Roma Pharmacy 💖✨",
+      "caption": ""
+    }
+  ],
+  "activeProfiles": [
+    "default"
+  ],
+  "profilesSettings": {}
+}
